@@ -1,0 +1,204 @@
+﻿<UserControl x:Class="Hoster.Views.ListenerSettingUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Custom="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+             xmlns:local="clr-namespace:Hoster.Views"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:cnv="clr-namespace:Hoster.Converters"
+             xmlns:vm="clr-namespace:Hoster.ViewModel" 
+             xmlns:helpers="clr-namespace:Hoster.WpfHelper"
+             mc:Ignorable="d"  d:DataContext="{d:DesignInstance vm:ListenerSettingsViewModel }"
+             d:DesignHeight="500" d:DesignWidth="300">
+    <UserControl.Resources>
+        <cnv:BooleanReverseToVisibilityHiddenConverter x:Key=" BooleanReverseToVisibilityHiddenConverter" />
+        <cnv:BooleanReverseConverter x:Key="BooleanInverseConverter"></cnv:BooleanReverseConverter>
+        <cnv:NumberToStringConverter x:Key="NumberToStringConverter"/>
+        <cnv:BooleanToVisibilityCollapsedConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" x:Name="label20" Content="Hoster Info" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="133" FontWeight="Bold" FontStyle="Italic"/>
+            <Label Grid.Row="2" x:Name="labeld"  Content="IP" HorizontalAlignment="Left" Visibility="{Binding ListenerSettings.IsTCPIP,Converter={StaticResource BooleanToVisibilityConverter}}"
+                VerticalAlignment="Top" Width="46"/>
+            <Label Grid.Row="2" x:Name="labelc"  Content="COM port" HorizontalAlignment="Left" Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                VerticalAlignment="Top"/>
+            <TextBox Grid.Row="2" x:Name="textBox" IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="35" Margin="110,0,0,0" TextWrapping="Wrap" Visibility="{Binding  ListenerSettings.IsTCPIP,Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Text="{Binding ListenerSettings.IPAddress,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <TextBox Grid.Row="2"
+                      x:Name="ComPortsList"
+                      IsEnabled="{Binding ListenerSettings.InEditMode}"
+                      HorizontalAlignment="Left" 
+                      Height="34" 
+                     Text="{Binding ListenerSettings.COMPort,UpdateSourceTrigger=PropertyChanged}"
+                      Margin="110,0,0,0" 
+                      Visibility="{Binding  ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                      VerticalAlignment="Top" 
+                      Width="70"/>
+            <Label Grid.Row="2" x:Name="labelprty"  Content="Parity" HorizontalAlignment="Left" Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                VerticalAlignment="Top" Margin="180,0,0,0"/>
+            <ComboBox Grid.Row="2"
+                      x:Name="ParityList"  IsEnabled="{Binding ListenerSettings.InEditMode}" 
+                      HorizontalAlignment="Left"  
+                      Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Height="34" Margin="227,0,0,0"  
+                      ItemsSource="{Binding ListenerSettings.ParityList}"  
+                      SelectedIndex="{Binding ListenerSettings.Parity}"
+                      VerticalAlignment="Top" Width="70"/>
+            <Label Grid.Row="3" x:Name="label1w" Content="Port" HorizontalAlignment="Left" Margin="3,0,0,0" Visibility="{Binding ListenerSettings.IsTCPIP,Converter={StaticResource BooleanToVisibilityConverter}}"
+                  VerticalAlignment="Top"/>
+            <Label Grid.Row="3" x:Name="label1b" Content="Baud Rate" HorizontalAlignment="Left" Margin="3,0,0,0" Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                  VerticalAlignment="Top"/>
+            <TextBox Grid.Row="3" x:Name="textBox1"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left"  Visibility="{Binding ListenerSettings.IsTCPIP,Converter={StaticResource BooleanToVisibilityConverter}}"
+                  Height="34" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.Port,Mode=TwoWay}"  VerticalAlignment="Top" Width="181"/>
+            <ComboBox Grid.Row="3" 
+                     x:Name="BdRatesList"
+                     IsEnabled="{Binding ListenerSettings.InEditMode}"
+                     HorizontalAlignment="Left"   
+                     Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                     Margin="110,0,0,0"  
+                      SelectedItem="{Binding ListenerSettings.BaudRate}"
+                     ItemsSource="{Binding ListenerSettings.BaudRatesList}"  
+                     VerticalAlignment="Top" Width="70"/>
+            <Label Grid.Row="3" x:Name="labelstp" Content="StopBits" HorizontalAlignment="Left" Margin="180,0,0,0" Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                  VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="3"
+                      x:Name="stpBtsList"  IsEnabled="{Binding ListenerSettings.InEditMode}" 
+                      HorizontalAlignment="Left"  
+                      Visibility="{Binding ListenerSettings.IsComPort,Converter={StaticResource BooleanToVisibilityConverter}}"
+                      Margin="227,0,0,0"  
+                      ItemsSource="{Binding ListenerSettings.StopBitsList}"  
+                      SelectedItem="{Binding ListenerSettings.StopBits ,UpdateSourceTrigger=PropertyChanged}"
+                      VerticalAlignment="Top" Width="70"/>
+            <Label Grid.Row="4" x:Name="label3" Content="Protocol" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+            <Label Grid.Row="1" x:Name="label4" Content="Connection Type" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+            <ComboBox x:Name="ConnTypesList"  Grid.Row="1"
+                  IsEnabled="{Binding ListenerSettings.InEditMode}"
+                  IsEditable="False"
+                  ItemsSource="{Binding ListenerSettings.ConnTypes}" 
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="ID"
+                  SelectedValue="{Binding ListenerSettings.ConnType,Mode=TwoWay}"
+                  HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Top" Width="181" Height="36"/>
+            <ComboBox x:Name="ProtocolsList" Grid.Row="4"
+                  IsEnabled="{Binding ListenerSettings.InEditMode}"
+                  ItemsSource="{Binding ListenerSettings.Protocols}"
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="ID"
+                  SelectedValue="{Binding ListenerSettings.ProtocolID,UpdateSourceTrigger=PropertyChanged}"
+                  IsEditable="False"
+                  HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Top" Width="181" Height="41"/>
+            <Label Grid.Row="5" x:Name="label6" Content="Response Latency" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="104"/>
+            <TextBox Grid.Row="5" x:Name="ResponseLatency"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="38" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.ResponseLatency}" VerticalAlignment="Top" Width="181"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+                <RowDefinition Height="30"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" x:Name="label7" Content="LIS Info" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="104" FontWeight="Bold" FontStyle="Italic"/>
+            <Label Grid.Row="1" x:Name="label8" Content="DB Type" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="97"/>
+            <ComboBox Grid.Row="1" x:Name="DBTypes"
+                      IsEnabled="{Binding ListenerSettings.InEditMode}"
+                      ItemsSource="{Binding ListenerSettings.DBTypes}"
+                      DisplayMemberPath="Name"
+                      SelectedValuePath="ID"
+                      SelectedValue="{Binding ListenerSettings.LisDBType,UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalAlignment="Left"
+                      Margin="110,0,0,0"
+                      VerticalAlignment="Top"
+                      Width="181"/>
+            <Label Grid.Row="2" x:Name="label9" Content="IP" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="97"/>
+            <TextBox x:Name="textBox2"  Grid.Row="2"
+                     IsEnabled="{Binding ListenerSettings.InEditMode}"
+                     HorizontalAlignment="Left" 
+                     Height="23" Margin="110,0,0,0" TextWrapping="Wrap" 
+                     Text="{Binding ListenerSettings.LisDBHostname,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="3" x:Name="label10" Content="Port" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.053,0.538" Width="54"/>
+            <TextBox   Grid.Row="3" x:Name="textBox3"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisDBPort ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label  Grid.Row="4" x:Name="label11" Content="DB Name" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+            <TextBox  Grid.Row="4" x:Name="textBox4"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisDBName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="5" x:Name="label12" Content="DB User" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="97"/>
+            <TextBox Grid.Row="5" x:Name="textBox5"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisDBUsername,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="6" x:Name="label13" Content="Password" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+            <PasswordBox Grid.Row="6" x:Name="passwordBox"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Margin="110,0,0,0" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="7" x:Name="label14" Content="Table" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="71" RenderTransformOrigin="0.549,1.308"/>
+            <TextBox Grid.Row="7" x:Name="textBox6"  IsEnabled="{Binding ListenerSettings.InEditMode}" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisTableName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="8" x:Name="label15" Content="PID" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="54"/>
+            <TextBox Grid.Row="8" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="textBox7" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisPIDCol,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="9" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="label16" Content="TestDesc" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.263,0.423" Width="54"/>
+            <TextBox Grid.Row="9" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="textBox8" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisTestDescCol,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label Grid.Row="10" x:Name="label17" Content="Result" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="97"/>
+            <TextBox Grid.Row="10" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="textBox9" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisResultCol,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <Label   Grid.Row="11" x:Name="label18" Content="Unit" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top"/>
+            <Label Grid.Row="12" x:Name="label19" Content="Reference" HorizontalAlignment="Left" Margin="3,0,0,0" VerticalAlignment="Top" Width="97"/>
+            <TextBox Grid.Row="11" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="textBox10" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisUnitCol,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <TextBox Grid.Row="12" IsEnabled="{Binding ListenerSettings.InEditMode}" x:Name="textBox11" HorizontalAlignment="Left" Height="23" Margin="110,0,0,0" TextWrapping="Wrap" Text="{Binding ListenerSettings.LisReferenceCol,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="181"/>
+            <mah:ToggleSwitch Grid.Row="13" IsEnabled="{Binding ListenerSettings.InEditMode}" Header="Auto Publish" IsChecked="{Binding ListenerSettings.AutoPublish,Mode=TwoWay}" Margin="3,0,0,0"/>
+            <ToolBar Grid.Row="14" AllowDrop="False" Margin="33,0,0,0" >
+                <Button   HorizontalAlignment="Left" ToolTip="Edit" IsEnabled="{Binding ListenerSettings.InEditMode,Converter={StaticResource BooleanInverseConverter}}" Margin="3,0,0,0" Width="80" Command="{Binding ListenerSettings.EditEvent}" VerticalAlignment="Top" >
+                    <Custom:PackIconModern Kind="Edit"/>
+                </Button>
+                <Button  IsEnabled="{Binding ListenerSettings.InEditMode}" ToolTip="Save Changes" HorizontalAlignment="Left" Margin="0,0,0,0" Command="{Binding ListenerSettings.SaveChanges}" VerticalAlignment="Top"   Width="80" >
+                    <Custom:PackIconModern Kind="Save"/>
+                </Button>
+                <Button   HorizontalAlignment="Left" ToolTip="Cancel" IsEnabled="{Binding ListenerSettings.InEditMode}" Margin="0,0,0,0" Command="{Binding ListenerSettings.CancelEvent}" VerticalAlignment="Top"  Width="80"  >
+                    <Custom:PackIconModern Kind="Cancel"/>
+                </Button>
+            </ToolBar>
+           
+                <StatusBar Grid.Row="15" >
+                    <StatusBarItem>
+                        <TextBlock Tag="{Binding Binding ListenerSettings.Feedback.Type,Converter={StaticResource NumberToStringConverter}}" Text="{Binding ListenerSettings.Feedback.Message}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <Trigger Property="Tag" Value="1">
+                                            <Setter Property="Foreground" Value="Green" />
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="2">
+                                            <Setter Property="Foreground" Value="Black" />
+                                        </Trigger>
+                                        <Trigger Property="Tag" Value="3">
+                                            <Setter Property="Foreground" Value="Red" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StatusBarItem>
+
+                </StatusBar>
+
+        </Grid>
+         </Grid>
+</UserControl>

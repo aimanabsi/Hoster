@@ -1,0 +1,35 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="clr-namespace:Hoster.Controls"
+             xmlns:local="clr-namespace:Hoster"
+             xmlns:vm="clr-namespace:Hoster.ViewModel"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" x:Class="Hoster.HomeUI"
+             mc:Ignorable="d" Height="405.6" Width="369.2">
+    <UserControl.DataContext>
+        <vm:HomeViewModel/>
+    </UserControl.DataContext>
+    <Grid Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="10"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Label x:Name="label" Grid.Row="0" Content="{Binding ListenerName}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top"  FontWeight="Bold" FontSize="18" FontStyle="Italic"/>
+        <Label x:Name="label1" Grid.Row="1" Content="{Binding ConnectionStatus, Mode=TwoWay}" Foreground="{Binding StatusColor}" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top" Width="709" Background="White" FontStyle="Italic" FontSize="10" Height="30"/>
+        <ScrollViewer Margin="0,0,0,0" Grid.Row="2" Style="{StaticResource DefaultScrollViewer}" >
+            <controls:MultiSelectDataGrid x:Name="dataGrid" GridLinesVisibility="All" Style="{StaticResource DefaultDataGrid}" Margin="10,66,0,0"  VerticalAlignment="Top"  ItemsSource="{Binding Messages}" AutoGenerateColumns="False" HorizontalAlignment="Left"   mah:ScrollViewerHelper.IsHorizontalScrollWheelEnabled="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding ID}" ClipboardContentBinding="{x:Null}" Header="ID " HeaderStringFormat="ID" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding SampleID}" ClipboardContentBinding="{x:Null}" Header="SampleID" HeaderStringFormat="Sample ID" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding TestDesc}" ClipboardContentBinding="{x:Null}" Header="Test" HeaderStringFormat="Test" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Result}" ClipboardContentBinding="{x:Null}" Header="Result" HeaderStringFormat="Result" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Unit}" ClipboardContentBinding="{x:Null}" Header="Unit" HeaderStringFormat="Unit" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding NormalRange}" ClipboardContentBinding="{x:Null}" Header="Normal Range" HeaderStringFormat="Normal Range" IsReadOnly="True"/>
+                </DataGrid.Columns>
+            </controls:MultiSelectDataGrid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
